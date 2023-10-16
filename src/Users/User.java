@@ -1,16 +1,19 @@
 package Users;
 
+import Interfaces.Confiavel;
+import Interfaces.Notificavel;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User {
+public class User implements Notificavel, Confiavel {
     private String name;
     private String email;
     private String passoword;
     private LocalDate dataRegistro;
-    private boolean active = true;
+    private boolean active;
     private List<String> comments;
 
     public User(String name, String email, String passoword) {
@@ -19,6 +22,7 @@ public class User {
         this.passoword = passoword;
         dataRegistro = LocalDate.of(2023,10, 15);
         this.comments = new ArrayList<>();
+        this.active = true;
     }
     public String getName() {
         return name;
@@ -52,11 +56,13 @@ public class User {
     }
     public void atualizarPerfil(String name, String email, String senha){
         this.name = name;
+        this.email = email;
+        this.passoword = senha;
 
         if(email != null && email.isEmpty()){
             this.email = email;
         }
-        if(senha != null && !email.isEmpty() && !senha.equals(this.passoword)){
+        if(senha != null && !senha.isEmpty() && !senha.equals(this.passoword)){
             this.passoword = senha;
         }
     }
@@ -99,5 +105,25 @@ public class User {
             System.out.println("Nenhum comentario disponivel");
             return false;
         }
+    }
+
+    @Override
+    public void enviarNotificao(User destinatario, String mensagem) {
+        if(this != destinatario){
+            System.out.println("Notificação de " + getName() + " para: " + destinatario.getName() + ": " + mensagem);
+        } else {
+            System.out.println("Você não pode enviar uma mensagem para si mesmo.");
+        }
+    }
+
+    @Override
+    public boolean isConfiavel() {
+        boolean confiavel = dataRegistro.getYear() < 2022;
+        if(confiavel) {
+            System.out.println(getName() + " é confiavel");
+        } else{
+            System.out.println(getName() + " é usuário desde " + dataRegistro.getYear());
+        }
+        return confiavel;
     }
 }
