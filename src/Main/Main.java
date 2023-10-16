@@ -10,11 +10,10 @@ public class Main {
         User user1 = new User("Vinicius", "vini@", "senha");
         Admin admin1 = new Admin("Bernarda", "be@", "senha123");
 
-        user1.doComment("1");
-        user1.doComment("2");
+        admin1.doComment("Comentário teste");
+        user1.doComment("teste");
 
-        user1.getComments();
         admin1.removeComments(user1, 0);
-        user1.getComments();
+        user1.showFormattedComments();
     }
 }

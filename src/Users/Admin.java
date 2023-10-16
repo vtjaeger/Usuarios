@@ -1,5 +1,6 @@
 package Users;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Admin extends User{
@@ -15,12 +16,15 @@ public class Admin extends User{
         }
     }
     public boolean removeComments(User user, int index){
-        if(index > user.getComments().size()){
-            return false;
-        }
-        else {
+        if(index >= 0 && index < user.getComments().size()){
             user.getComments().remove(index);
             return true;
+        } else {
+            System.out.println("Indice invalido");
+            return false;
         }
+    }
+    public boolean showAllCommentsUser(User user) {
+        return user.showFormattedComments();
     }
 }
